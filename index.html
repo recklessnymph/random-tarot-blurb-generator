@@ -61,25 +61,29 @@
   <img id="image" alt="Tarot Icon Image" />
   <div id="attribution"></div>
 
-    <script>
-  function pullCard() {
-    // Remove any old script tags first (optional but safe)
-    const oldScript = document.getElementById("jsonpScript");
-    if (oldScript) oldScript.remove();
-  
-    const script = document.createElement("script");
-    script.id = "jsonpScript";
-    script.src = "AKfycbwhufmD8b74eyDUZkaRFTvgnX_6opomfQsTcAOywNS3QWqoa__sL8mMZUhrmkSAt-j-/exec?callback=showCard";
-    document.body.appendChild(script);
-  }
-  
-  // This function will be called automatically with the data
-  function showCard(data) {
-    document.getElementById("title").innerText = data.title || "No Title";
-    document.getElementById("text").innerText = data.body_text || "No Description";
-    document.getElementById("image").src = data.image_url || "";
-    document.getElementById("attribution").innerHTML = data.attribution || "";
-  }
+  <script>
+    // Replace this with your full Apps Script Web App URL
+    const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwhufmD8b74eyDUZkaRFTvgnX_6opomfQsTcAOywNS3QWqoa__sL8mMZUhrmkSAt-j-/exec";
+
+    function pullCard() {
+      // Remove any old JSONP script tags
+      const oldScript = document.getElementById("jsonpScript");
+      if (oldScript) oldScript.remove();
+
+      // Create a new script tag for JSONP
+      const script = document.createElement("script");
+      script.id = "jsonpScript";
+      script.src = APPS_SCRIPT_URL + "?callback=showCard";
+      document.body.appendChild(script);
+    }
+
+    // This function will be called by Apps Script JSONP
+    function showCard(data) {
+      document.getElementById("title").innerText = data.title || "No Title";
+      document.getElementById("text").innerText = data.body_text || "No Description";
+      document.getElementById("image").src = data.image_url || "";
+      document.getElementById("attribution").innerHTML = data.attribution || "";
+    }
   </script>
 
 </body>
