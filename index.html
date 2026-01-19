@@ -61,25 +61,25 @@
   <img id="image" alt="Tarot Icon Image" />
   <div id="attribution"></div>
 
-  <script>
-    async function pullCard() {
-      try {
-        const response = await fetch("https://script.google.com/macros/s/AKfycbwhufmD8b74eyDUZkaRFTvgnX_6opomfQsTcAOywNS3QWqoa__sL8mMZUhrmkSAt-j-/exec");
-        const data = await response.json();
-
-        // Update page with fetched data
-        document.getElementById("title").innerText = data.title || "No Title";
-        document.getElementById("text").innerText = data.body_text || "No Description";
-        document.getElementById("image").src = data.image_url || "";
-        document.getElementById("attribution").innerHTML = data.attribution || "";
-      } catch (error) {
-        console.error("Error fetching data:", error);
-        document.getElementById("title").innerText = "Error loading data";
-        document.getElementById("text").innerText = "Please try again later.";
-        document.getElementById("image").src = "";
-        document.getElementById("attribution").innerHTML = "";
-      }
-    }
+    <script>
+  function pullCard() {
+    // Remove any old script tags first (optional but safe)
+    const oldScript = document.getElementById("jsonpScript");
+    if (oldScript) oldScript.remove();
+  
+    const script = document.createElement("script");
+    script.id = "jsonpScript";
+    script.src = "AKfycbwhufmD8b74eyDUZkaRFTvgnX_6opomfQsTcAOywNS3QWqoa__sL8mMZUhrmkSAt-j-/exec?callback=showCard";
+    document.body.appendChild(script);
+  }
+  
+  // This function will be called automatically with the data
+  function showCard(data) {
+    document.getElementById("title").innerText = data.title || "No Title";
+    document.getElementById("text").innerText = data.body_text || "No Description";
+    document.getElementById("image").src = data.image_url || "";
+    document.getElementById("attribution").innerHTML = data.attribution || "";
+  }
   </script>
 
 </body>
